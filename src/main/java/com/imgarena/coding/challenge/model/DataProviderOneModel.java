@@ -1,6 +1,9 @@
 package com.imgarena.coding.challenge.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.time.LocalDate;
 import org.immutables.value.Value;
 
 /**
@@ -22,9 +25,11 @@ public interface DataProviderOneModel {
 
   String countryCode();
 
-  String startDate();
+  @JsonFormat( shape = Shape.STRING, pattern = "dd/MM/yy" )
+  LocalDate startDate();
 
-  String endDate();
+  @JsonFormat( shape = Shape.STRING, pattern = "dd/MM/yy" )
+  LocalDate endDate();
 
-  String roundCount();
+  int roundCount();
 }

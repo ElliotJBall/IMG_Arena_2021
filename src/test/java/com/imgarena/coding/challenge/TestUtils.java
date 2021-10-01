@@ -2,6 +2,7 @@ package com.imgarena.coding.challenge;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -15,7 +16,8 @@ import java.util.Objects;
  */
 public class TestUtils {
 
-  public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().registerModule(
+      new JavaTimeModule());
 
   public static JsonNode loadJsonFile(final String path) throws IOException, URISyntaxException {
     return OBJECT_MAPPER.readTree(

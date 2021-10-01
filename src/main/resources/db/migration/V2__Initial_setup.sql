@@ -4,11 +4,11 @@ CREATE TABLE public.golf_tournament (
 	external_source varchar(255) NOT NULL,
 	"name" varchar(255) NULL,
 	course_name varchar(255) NULL,
-	country_code varchar(255) NULL,
+	country_name varchar(255) NULL,
 	start_date date NOT NULL,
 	end_date date NOT NULL,
 	rounds int4 NOT NULL,
 	CONSTRAINT golf_tournament_pkey PRIMARY KEY (id)
 );
 
-CREATE INDEX external_id_idx ON public.golf_tournament USING btree (external_id);
+CREATE INDEX external_id_source_idx ON public.golf_tournament USING btree (external_id, external_source);

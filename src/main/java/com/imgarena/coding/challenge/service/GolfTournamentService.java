@@ -57,10 +57,14 @@ public class GolfTournamentService {
     var golfTournament = mapper.convert(json);
 
     // Determine if we have a new entity or an existing one
-    repository.findByExternalId(golfTournament.getExternalId())
+    repository.findByExternalIdAndExternalSource(golfTournament.getExternalId(), golfTournament.getExternalSource())
         .ifPresent(existing -> golfTournament.setId(existing.getId()));
 
     // Persist and return
     return Optional.of(repository.save(golfTournament));
+  }
+
+  public List<GolfTournament> findAll() {
+    return repository.findAll();
   }
 }

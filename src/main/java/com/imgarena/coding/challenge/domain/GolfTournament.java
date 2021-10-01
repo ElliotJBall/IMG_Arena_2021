@@ -26,7 +26,7 @@ public class GolfTournament {
 
   private String name;
 
-  private String countryCode;
+  private String countryName;
 
   private LocalDate startDate;
 
@@ -37,14 +37,14 @@ public class GolfTournament {
   public GolfTournament(final long id, final String externalId, final String externalSource,
       final String courseName,
       final String name,
-      final String countryCode, final LocalDate startDate, final LocalDate endDate,
+      final String countryName, final LocalDate startDate, final LocalDate endDate,
       final int rounds) {
     this.id = id;
     this.externalId = externalId;
     this.externalSource = externalSource;
     this.courseName = courseName;
     this.name = name;
-    this.countryCode = countryCode;
+    this.countryName = countryName;
     this.startDate = startDate;
     this.endDate = endDate;
     this.rounds = rounds;
@@ -93,12 +93,12 @@ public class GolfTournament {
     this.name = name;
   }
 
-  public String getCountryCode() {
-    return countryCode;
+  public String getCountryName() {
+    return countryName;
   }
 
-  public void setCountryCode(final String countryCode) {
-    this.countryCode = countryCode;
+  public void setCountryName(final String countryName) {
+    this.countryName = countryName;
   }
 
   public LocalDate getStartDate() {
@@ -137,14 +137,14 @@ public class GolfTournament {
     return id == that.id && rounds == that.rounds && Objects.equals(externalId,
         that.externalId) && Objects.equals(externalSource, that.externalSource)
         && Objects.equals(courseName, that.courseName) && Objects.equals(name,
-        that.name) && Objects.equals(countryCode, that.countryCode)
+        that.name) && Objects.equals(countryName, that.countryName)
         && Objects.equals(startDate, that.startDate) && Objects.equals(endDate,
         that.endDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, externalId, externalSource, courseName, name, countryCode, startDate,
+    return Objects.hash(id, externalId, externalSource, courseName, name, countryName, startDate,
         endDate, rounds);
   }
 
@@ -156,7 +156,7 @@ public class GolfTournament {
         ", externalSource='" + externalSource + '\'' +
         ", courseName='" + courseName + '\'' +
         ", name='" + name + '\'' +
-        ", countryCode='" + countryCode + '\'' +
+        ", countryCode='" + countryName + '\'' +
         ", startDate=" + startDate +
         ", endDate=" + endDate +
         ", rounds=" + rounds +
