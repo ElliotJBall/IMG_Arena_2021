@@ -50,15 +50,21 @@ public class GolfTournamentService {
 
     // Fetch the mapper for the given data provider
     var mapper = dataProviderMappers.get(dataProviderId);
-
-    log.debug("Using mapper: {} to convert incoming JSON: {}", mapper, json);
+    log.debug("Using mapper: {} for data provider id: {}", mapper, dataProviderId);
 
     // Convert to the domain model
     var golfTournament = mapper.convert(json);
+    log.debug("Converted JSON: {} into golf tournament domain model: {}", json, golfTournament);
 
     // Determine if we have a new entity or an existing one
-    repository.findByExternalIdAndExternalSource(golfTournament.getExternalId(), golfTournament.getExternalSource())
-        .ifPresent(existing -> golfTournament.setId(existing.getId()));
+    repository.findByExternalIdAndExternalSource(golfTournament.getExternalId(),
+            golfTournament.getExternalSource())
+        .ifPresent(existing -> {
+          log.debug("Updating existing tournament with foreign id: {} and foreign source: {}",
+              existing.getExternalId(), existing.getExternalSource());
+
+          golfTournament.setId(existing.getId());
+        });
 
     // Persist and return
     return Optional.of(repository.save(golfTournament));

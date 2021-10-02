@@ -6,8 +6,6 @@ import com.imgarena.coding.challenge.domain.GolfTournament;
 import com.imgarena.coding.challenge.exception.MappingException;
 import com.imgarena.coding.challenge.model.DataProviderTwoModel;
 import java.time.ZoneId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,14 +15,10 @@ import org.springframework.stereotype.Component;
  * @author Elliot Ball
  */
 @Component
-public class DataProviderTwoMapper implements GolfTournamentMapper<DataProviderTwoModel> {
-
-  private static final Logger log = LoggerFactory.getLogger(DataProviderTwoMapper.class);
-
-  private final ObjectMapper objectMapper;
+public class DataProviderTwoMapper extends AbstractGolfTournamentMapper<DataProviderTwoModel> {
 
   public DataProviderTwoMapper(final ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
+    super(objectMapper);
   }
 
   @Override
@@ -55,20 +49,7 @@ public class DataProviderTwoMapper implements GolfTournamentMapper<DataProviderT
     tournament.setStartDate(dto.epochStart().atZone(ZoneId.of("UTC")).toLocalDate());
     tournament.setEndDate(dto.epochFinish().atZone(ZoneId.of("UTC")).toLocalDate());
 
-    log.debug("Created GolfTournament: {} from JSON: {}", tournament, json);
-
     return tournament;
-  }
-
-  @Override
-  public DataProviderTwoModel parseToDto(final JsonNode json) throws MappingException {
-    try {
-      return objectMapper.convertValue(json, this.getClazz());
-    } catch (IllegalArgumentException e) {
-      log.error("Failed to convert the data provider JSON: {} into designated DTO: {}", json,
-          this.getClazz(), e);
-      throw new MappingException(e);
-    }
   }
 
   @Override

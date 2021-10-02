@@ -28,7 +28,10 @@ public interface GolfTournamentMapper<T> {
   GolfTournament convert(JsonNode json) throws MappingException;
 
   /**
-   * Parses the incoming JSON into the representing DTO
+   * Parses the incoming JSON into the representing DTO.
+   *
+   * Note:
+   * Can skip this step entirely and act directly on the JsonNode with pointers if you wanted.
    *
    * @param json the incoming JSON from the data provider
    * @return the parsed {@link T} DTO

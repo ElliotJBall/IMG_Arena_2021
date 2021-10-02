@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,15 +19,12 @@ import org.springframework.stereotype.Component;
  * @author Elliot Ball
  */
 @Component
-public class DataProviderOneMapper implements GolfTournamentMapper<DataProviderOneModel> {
+public class DataProviderOneMapper extends AbstractGolfTournamentMapper<DataProviderOneModel> {
 
   private static final Map<String, Locale> ISO_CODE_TO_COUNTRY_NAME = new HashMap<>();
-  private static final Logger log = LoggerFactory.getLogger(DataProviderOneMapper.class);
-
-  private final ObjectMapper objectMapper;
 
   public DataProviderOneMapper(final ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
+    super(objectMapper);
 
     Arrays.stream(Locale.getAvailableLocales())
         .forEach(iso -> ISO_CODE_TO_COUNTRY_NAME.put(iso.getCountry(), iso));
@@ -60,20 +55,7 @@ public class DataProviderOneMapper implements GolfTournamentMapper<DataProviderO
     tournament.setStartDate(dto.startDate());
     tournament.setEndDate(dto.endDate());
 
-    log.debug("Created GolfTournament: {} from JSON: {}", tournament, json);
-
     return tournament;
-  }
-
-  @Override
-  public DataProviderOneModel parseToDto(final JsonNode json) throws MappingException {
-    try {
-      return objectMapper.convertValue(json, this.getClazz());
-    } catch (IllegalArgumentException e) {
-      log.error("Failed to convert the data provider JSON: {} into designated DTO: {}", json,
-          this.getClazz(), e);
-      throw new MappingException(e);
-    }
   }
 
   private static String parseCountryName(final String countryCode) {
