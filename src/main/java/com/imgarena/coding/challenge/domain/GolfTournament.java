@@ -1,11 +1,16 @@
 package com.imgarena.coding.challenge.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * Tournament entity model.
@@ -13,11 +18,12 @@ import javax.persistence.Id;
  * @author Elliot Ball
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class GolfTournament {
 
   @Id
-  @GeneratedValue( strategy = GenerationType.IDENTITY )
-  private long id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   private String externalId;
 
@@ -35,11 +41,17 @@ public class GolfTournament {
 
   private int rounds;
 
-  public GolfTournament(final long id, final String externalId, final String externalSource,
-      final String courseName,
-      final String name,
-      final String countryName, final LocalDate startDate, final LocalDate endDate,
-      final int rounds) {
+  @CreatedDate
+  private LocalDateTime createdDate;
+
+  @LastModifiedDate
+  private LocalDateTime lastModifiedDate;
+
+  public GolfTournament(final Long id, final String externalId, final String externalSource,
+      final String courseName, final String name, final String countryName,
+      final LocalDate startDate,
+      final LocalDate endDate, final int rounds, final LocalDateTime createdDate,
+      final LocalDateTime lastModifiedDate) {
     this.id = id;
     this.externalId = externalId;
     this.externalSource = externalSource;
@@ -49,16 +61,19 @@ public class GolfTournament {
     this.startDate = startDate;
     this.endDate = endDate;
     this.rounds = rounds;
+    this.createdDate = createdDate;
+    this.lastModifiedDate = lastModifiedDate;
   }
 
   public GolfTournament() {
+
   }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(final long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 
@@ -126,6 +141,23 @@ public class GolfTournament {
     this.rounds = rounds;
   }
 
+  public LocalDateTime getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(final LocalDateTime createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public LocalDateTime getLastModifiedDate() {
+    return lastModifiedDate;
+  }
+
+  public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
+    this.lastModifiedDate = lastModifiedDate;
+  }
+
+  // Based on https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -135,18 +167,12 @@ public class GolfTournament {
       return false;
     }
     final GolfTournament that = (GolfTournament) o;
-    return id == that.id && rounds == that.rounds && Objects.equals(externalId,
-        that.externalId) && Objects.equals(externalSource, that.externalSource)
-        && Objects.equals(courseName, that.courseName) && Objects.equals(name,
-        that.name) && Objects.equals(countryName, that.countryName)
-        && Objects.equals(startDate, that.startDate) && Objects.equals(endDate,
-        that.endDate);
+    return Objects.equals(id, that.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, externalId, externalSource, courseName, name, countryName, startDate,
-        endDate, rounds);
+    return getClass().hashCode();
   }
 
   @Override
@@ -157,10 +183,12 @@ public class GolfTournament {
         ", externalSource='" + externalSource + '\'' +
         ", courseName='" + courseName + '\'' +
         ", name='" + name + '\'' +
-        ", countryCode='" + countryName + '\'' +
+        ", countryName='" + countryName + '\'' +
         ", startDate=" + startDate +
         ", endDate=" + endDate +
         ", rounds=" + rounds +
+        ", createdDate=" + createdDate +
+        ", lastModifiedDate=" + lastModifiedDate +
         '}';
   }
 }
