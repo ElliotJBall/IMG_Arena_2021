@@ -1,11 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/img_arena_golf
-    username: postgres
-    password: password
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     open-in-view:
       server: false
 server:

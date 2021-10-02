@@ -5,7 +5,6 @@ import static com.imgarena.coding.challenge.TestUtils.loadJsonFile;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.imgarena.coding.challenge.exception.MappingException;
 import java.time.LocalDate;
@@ -38,18 +37,6 @@ class DataProviderTwoMapperTest {
     assertThat(golfTournament.getStartDate()).isEqualTo(LocalDate.of(2021, 12, 1));
     assertThat(golfTournament.getEndDate()).isEqualTo(LocalDate.of(2021, 12, 2));
     assertThat(golfTournament.getRounds()).isEqualTo(2);
-  }
-
-  @Test
-  void testNullJsonPayloadResultsInEmptyRecord() {
-    // Given I have a null JSON payload
-    JsonNode json = null;
-
-    // When I run this through the mapper
-    var golfTournament = mapper.convert(json);
-
-    // Then an empty golf tournament domain model is returned
-    assertThat(golfTournament).isNotNull();
   }
 
   @Test

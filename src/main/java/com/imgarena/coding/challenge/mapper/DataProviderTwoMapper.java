@@ -31,11 +31,6 @@ public class DataProviderTwoMapper extends AbstractGolfTournamentMapper<DataProv
     var dto = this.parseToDto(json);
 
     var tournament = new GolfTournament();
-
-    if (dto == null) {
-      return tournament;
-    }
-
     tournament.setExternalId(dto.tournamentUuid());
     tournament.setExternalSource(this.getDataProviderId());
 
