@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.imgarena.coding.challenge.domain.GolfTournament;
 import com.imgarena.coding.challenge.exception.MappingException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import org.junit.jupiter.api.Test;
  */
 class DataProviderTwoMapperTest {
 
-  private DataProviderTwoMapper mapper = new DataProviderTwoMapper(OBJECT_MAPPER);
+  private final DataProviderTwoMapper mapper = new DataProviderTwoMapper(OBJECT_MAPPER);
 
   @Test
   void testCanConvertValidJson() throws Exception {

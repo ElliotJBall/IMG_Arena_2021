@@ -35,10 +35,26 @@ public class GolfTournamentService {
     this.repository = repository;
   }
 
+  /**
+   * Check if there is a mapper configured to handle the given data provider. Returns true if a
+   * mapper exists for the given data source id.
+   *
+   * @param dataSourceId the data provider id
+   * @return true if a mapper exists for the given data provider id, else false
+   */
   public boolean canHandleDataSource(final String dataSourceId) {
     return dataProviderMappers.containsKey(dataSourceId);
   }
 
+  /**
+   * Converts the incoming golf tournament JSON for a given data provider into the {@link
+   * GolfTournament} domain model.
+   *
+   * @param dataProviderId the data provider id
+   * @param json the data provider golf tournament JSON
+   * @return populated golf tournament optional if a mapper exists for the given data source id,
+   * else empty optional
+   */
   public Optional<GolfTournament> convert(final String dataProviderId,
       final JsonNode json) {
     if (!dataProviderMappers.containsKey(dataProviderId)) {
@@ -70,6 +86,11 @@ public class GolfTournamentService {
     return Optional.of(repository.save(golfTournament));
   }
 
+  /**
+   * Fetch all golf tournaments from the database.
+   *
+   * @return a list of all golf tournaments in the database
+   */
   public List<GolfTournament> findAll() {
     return repository.findAll();
   }

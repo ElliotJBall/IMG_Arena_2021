@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Elliot Ball
  */
 @RestController
-@RequestMapping("golf-tournaments")
+@RequestMapping("/golf/tournaments")
 public class GolfTournamentController {
 
   private final GolfTournamentService service;
@@ -40,11 +40,10 @@ public class GolfTournamentController {
    * @param json the data provider golf tournament JSON payload
    * @return the golf tournament domain model we parsed
    */
-  @PostMapping(path = "/")
+  @PostMapping
   public ResponseEntity<GolfTournament> createGolfTournament(
       @RequestHeader(value = "X-DATA-SOURCE-ID") final String dataSourceId,
       @RequestBody final JsonNode json) {
-
     if (!service.canHandleDataSource(dataSourceId)) {
       return ResponseEntity.badRequest().build();
     }
@@ -58,7 +57,7 @@ public class GolfTournamentController {
    *
    * @return all {@link GolfTournament}'s
    */
-  @GetMapping(path = "/")
+  @GetMapping
   public ResponseEntity<List<GolfTournament>> findAll() {
     return ResponseEntity.ok(service.findAll());
   }

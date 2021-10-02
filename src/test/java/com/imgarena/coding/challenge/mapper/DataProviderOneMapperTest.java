@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
  */
 class DataProviderOneMapperTest {
 
-  private DataProviderOneMapper mapper = new DataProviderOneMapper(OBJECT_MAPPER);
+  private final DataProviderOneMapper mapper = new DataProviderOneMapper(OBJECT_MAPPER);
 
   @Test
   void testCanConvertValidJson() throws Exception {
